@@ -5,7 +5,7 @@ In the flutter event calendar widget, you can prevent the multiple events assign
 ## Step 1:
 In initState(), set the default values for calendar view.
 
-```mxl
+```xml
 CalendarView _calendarView;
 @override
 void initState() {
