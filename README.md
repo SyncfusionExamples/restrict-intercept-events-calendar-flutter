@@ -125,3 +125,8 @@ dynamic _isInterceptExistingAppointments(DateTime date, Meeting selectedAppointm
   return null;
 }
 ```
+**[View document in Syncfusion Flutter Knowledge base](https://www.syncfusion.com/kb/11411/how-to-prevent-multiple-assignments-of-the-same-time-events-in-the-flutter-event-calendar)**
+
+**Screenshots**
+
+![interceptingalert](http://www.syncfusion.com/uploads/user/kb/flut/flut-789/flut-789_img1.png)
