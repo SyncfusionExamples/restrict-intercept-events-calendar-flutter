@@ -127,4 +127,4 @@ dynamic _isInterceptExistingAppointments(DateTime date, Meeting selectedAppointm
 
 **Screenshot**
 
-![interceptingalert](http://www.syncfusion.com/uploads/user/kb/flut/flut-789/flut-789_img1.png)
+<img alt="interceptingalert"  src="http://www.syncfusion.com/uploads/user/kb/flut/flut-789/flut-789_img1.png" width="250" height="400" />|
