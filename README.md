@@ -73,8 +73,7 @@ Class DataSource extends CalendarDataSource {
   @override
   DateTime getEndTime(int index) => appointments[index].to;
 }
-```
- 
+``` 
 
 ## Step 4:
 You can schedule meetings for a day by setting the `From` and `To` properties of the Meeting class. Create a collection of `Meetings`  data and assign it to the `appointments` property of `CalendarDataSource`.
@@ -105,7 +104,6 @@ List<Meeting> getMeetingDetails() {
       }
     }
   }
- 
   return meetingCollection;
 }
 ```
@@ -127,6 +125,6 @@ dynamic _isInterceptExistingAppointments(DateTime date, Meeting selectedAppointm
 ```
 **[View document in Syncfusion Flutter Knowledge base](https://www.syncfusion.com/kb/11411/how-to-prevent-multiple-assignments-of-the-same-time-events-in-the-flutter-event-calendar)**
 
-**Screenshots**
+**Screenshot**
 
 ![interceptingalert](http://www.syncfusion.com/uploads/user/kb/flut/flut-789/flut-789_img1.png)
