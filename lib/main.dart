@@ -18,38 +18,36 @@ void main() => runApp(const MaterialApp(
 
 //ignore: must_be_immutable
 class EventCalendar extends StatefulWidget {
-  const EventCalendar({Key key}) : super(key: key);
+  const EventCalendar({super.key});
 
   @override
   EventCalendarState createState() => EventCalendarState();
 }
 
-List<Color> _colorCollection;
-List<String> _colorNames;
+late List<Color> _colorCollection;
+late List<String> _colorNames;
 int _selectedColorIndex = 0;
 int _selectedTimeZoneIndex = 0;
-List<String> _timeZoneCollection;
-DataSource events;
-Meeting _selectedAppointment;
-DateTime _startDate;
-TimeOfDay _startTime;
-DateTime _endDate;
-TimeOfDay _endTime;
-bool _isAllDay;
+late List<String> _timeZoneCollection;
+late DataSource events;
+Meeting? _selectedAppointment;
+late DateTime _startDate;
+late TimeOfDay _startTime;
+late DateTime _endDate;
+late TimeOfDay _endTime;
+late bool _isAllDay;
 String _subject = '';
 String _notes = '';
 
 
 class EventCalendarState extends State<EventCalendar> {
-  EventCalendarState();
 
-  CalendarView _calendarView;
-  List<String> eventNameCollection;
-  List<Meeting> appointments;
+  late List<String> eventNameCollection;
+  late List<Meeting> appointments;
+  CalendarController calendarController = CalendarController();
 
   @override
   void initState() {
-    _calendarView = CalendarView.month;
     appointments = getMeetingDetails();
     events = DataSource(appointments);
     _selectedAppointment = null;
@@ -61,49 +59,28 @@ class EventCalendarState extends State<EventCalendar> {
   }
 
   @override
-  Widget build([BuildContext context]) {
+  Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        resizeToAvoidBottomPadding: false,
         body: Padding(
             padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-            child: getEventCalendar(_calendarView, events, onCalendarTapped)));
+            child: getEventCalendar(events, onCalendarTapped)));
   }
 
   SfCalendar getEventCalendar(
-      [CalendarView _calendarView,
-      CalendarDataSource _calendarDataSource,
-      CalendarTapCallback calendarTapCallback]) {
+      CalendarDataSource calendarDataSource,
+      CalendarTapCallback calendarTapCallback) {
     return SfCalendar(
-        view: _calendarView,
-        dataSource: _calendarDataSource,
+        dataSource: calendarDataSource,
+        view: CalendarView.month,
+        controller: calendarController,
         onTap: calendarTapCallback,
         initialDisplayDate: DateTime(DateTime.now().year, DateTime.now().month,
             DateTime.now().day, 0, 0, 0),
-        monthViewSettings: MonthViewSettings(
+        monthViewSettings: const MonthViewSettings(
             appointmentDisplayMode: MonthAppointmentDisplayMode.appointment),
-        timeSlotViewSettings: TimeSlotViewSettings(
-            minimumAppointmentDuration: const Duration(minutes: 60)));
-  }
-
-  void onCalendarViewChange(String value) {
-    if (value == 'Day') {
-      _calendarView = CalendarView.day;
-    } else if (value == 'Week') {
-      _calendarView = CalendarView.week;
-    } else if (value == 'Work week') {
-      _calendarView = CalendarView.workWeek;
-    } else if (value == 'Month') {
-      _calendarView = CalendarView.month;
-    } else if (value == 'Timeline day') {
-      _calendarView = CalendarView.timelineDay;
-    } else if (value == 'Timeline week') {
-      _calendarView = CalendarView.timelineWeek;
-    } else if (value == 'Timeline work week') {
-      _calendarView = CalendarView.timelineWorkWeek;
-    }
-
-    setState(() {});
+        timeSlotViewSettings: const TimeSlotViewSettings(
+            minimumAppointmentDuration: Duration(minutes: 60)));
   }
 
   void onCalendarTapped(CalendarTapDetails calendarTapDetails) {
@@ -119,14 +96,14 @@ class EventCalendarState extends State<EventCalendar> {
       _selectedTimeZoneIndex = 0;
       _subject = '';
       _notes = '';
-      if (_calendarView == CalendarView.month) {
-        _calendarView = CalendarView.day;
+      if (calendarController.view == CalendarView.month) {
+        calendarController.view = CalendarView.day;
       } else {
         if (calendarTapDetails.appointments != null &&
-            calendarTapDetails.appointments.length == 1) {
-          final Meeting meetingDetails= calendarTapDetails.appointments[0];
-          _startDate = meetingDetails.from;
-          _endDate = meetingDetails.to;
+            calendarTapDetails.appointments!.length == 1) {
+          final Meeting meetingDetails= calendarTapDetails.appointments![0];
+          _startDate = meetingDetails.from!;
+          _endDate = meetingDetails.to!;
           _isAllDay = meetingDetails.isAllDay;
           _selectedColorIndex =
               _colorCollection.indexOf(meetingDetails.background);
@@ -139,8 +116,8 @@ class EventCalendarState extends State<EventCalendar> {
           _notes = meetingDetails.description;
           _selectedAppointment = meetingDetails;
         } else {
-          final DateTime date = calendarTapDetails.date;
-          _startDate = date;
+          final DateTime? date = calendarTapDetails.date;
+          _startDate = date!;
           _endDate = date.add(const Duration(hours: 1));
         }
         _startTime =
@@ -149,7 +126,7 @@ class EventCalendarState extends State<EventCalendar> {
         Navigator.push<Widget>(
           context,
           MaterialPageRoute(
-              builder: (BuildContext context) => AppointmentEditor()),
+              builder: (BuildContext context) => const AppointmentEditor()),
         );
       }
     });
@@ -330,28 +307,28 @@ class DataSource extends CalendarDataSource {
   }
 
   @override
-  bool isAllDay(int index) => appointments[index].isAllDay;
+  bool isAllDay(int index) => appointments![index].isAllDay;
 
   @override
-  String getSubject(int index) => appointments[index].eventName;
+  String getSubject(int index) => appointments![index].eventName;
 
   @override
-  String getStartTimeZone(int index) => appointments[index].startTimeZone;
+  String getStartTimeZone(int index) => appointments![index].startTimeZone;
 
   @override
-  String getNotes(int index) => appointments[index].description;
+  String getNotes(int index) => appointments![index].description;
 
   @override
-  String getEndTimeZone(int index) => appointments[index].endTimeZone;
+  String getEndTimeZone(int index) => appointments![index].endTimeZone;
 
   @override
-  Color getColor(int index) => appointments[index].background;
+  Color getColor(int index) => appointments![index].background;
 
   @override
-  DateTime getStartTime(int index) => appointments[index].from;
+  DateTime getStartTime(int index) => appointments![index].from;
 
   @override
-  DateTime getEndTime(int index) => appointments[index].to;
+  DateTime getEndTime(int index) => appointments![index].to;
 }
 
 class Meeting {
@@ -366,8 +343,8 @@ class Meeting {
       this.description = ''});
 
   final String eventName;
-  final DateTime from;
-  final DateTime to;
+  final DateTime? from;
+  final DateTime? to;
   final Color background;
   final bool isAllDay;
   final String startTimeZone;

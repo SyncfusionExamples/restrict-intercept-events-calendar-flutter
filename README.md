@@ -1,4 +1,16 @@
+# restrict_intercept_events_calendar
 
+A new Flutter project.
 
-**[View document in Syncfusion Flutter Knowledge base](https://www.syncfusion.com/kb/11411/how-to-prevent-multiple-assignments-of-the-same-time-events-in-the-flutter-event-calendar)**
+## Getting Started
 
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
