@@ -2,18 +2,13 @@
 //  Generated file. Do not edit.
 //
 
-#import "GeneratedPluginRegistrant.h"
+// clang-format off
 
-#if __has_include(<url_launcher/FLTURLLauncherPlugin.h>)
-#import <url_launcher/FLTURLLauncherPlugin.h>
-#else
-@import url_launcher;
-#endif
+#import "GeneratedPluginRegistrant.h"
 
 @implementation GeneratedPluginRegistrant
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
-  [FLTURLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTURLLauncherPlugin"]];
 }
 
 @end
